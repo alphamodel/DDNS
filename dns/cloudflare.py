@@ -137,7 +137,8 @@ def update_record(domain, value, record_type="A"):
         for (rid, record) in records.items():
             if record['content'] != value:
                 res = request('PUT', '/' + zoneid + '/dns_records/' + record['id'],
-                              type=record_type, content=value, name=domain, ttl=Config.TTL)
+                              type=record_type, content=value, name=domain, ttl=Config.TTL,
+                              proxied=record['proxied'])
                 if res:
                     get_records.records[cache_key][rid]['content'] = value
                     result[rid] = res.get("name")
